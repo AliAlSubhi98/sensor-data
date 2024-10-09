@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensor Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        #barChartContainer, #lineChartContainer, #pieChartContainer {
+            margin-top: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .table-container {
+            max-height: 400px; /* Set a max height for the container */
+            overflow-y: auto;  /* Enable vertical scrolling */
+            border: 1px solid #dee2e6; /* Optional: Add a border for better visibility */
+            border-radius: 0.25rem; /* Optional: Add some border-radius */
+            margin-top: 20px; /* Optional: Add margin for spacing */
+        }
+
+.chart-container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center the items */
+    margin-top: 30px;
+}
+
+.chart-item {
+    width: 80%; /* Set width to 80% for better visibility */
+    margin: 20px 0; /* Add margin for spacing between charts */
+}
+
+canvas {
+    width: 100% !important; /* Ensure canvas fills its container */
+    height: 400px; /* Set a fixed height for the charts */
+}
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">Sensor Dashboard</h1>
+    <hr>
+
+    <!-- Form for submitting new sensor data -->
+    <form id="sensorDataForm">
+        <div class="form-group">
+            <label for="sensorType">Sensor Type:</label>
+            <input type="text" id="sensorType" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="dataType">Data Type:</label>
+            <select id="dataType" class="form-control" required>
+                <option value="temperature">Temperature</option>
+                <option value="humidity">Humidity</option>
+                <option value="CO2">CO2</option>
+                <option value="smoke">Smoke</option>
+                <option value="pressure">Pressure</option>
+                <option value="dust">Dust</option>
+                <option value="leak">Leak</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="value">Value:</label>
+            <input type="number" id="value" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="unit">Unit:</label>
+            <input type="text" id="unit" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Sensor Data</button>
+    </form>
+
+    <hr>
+    <h2 class="mt-4">Sensor Data</h2>
+    <div class="table-container">
+        <table class="table" id="sensorDataTable">
+            <thead>
+            <tr>
+                <th>Sensor Type</th>
+                <th>Data Type</th>
+                <th>Value</th>
+                <th>Unit</th>
+                <th>Timestamp</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="5" class="text-center">Loading data...</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <button id="downloadReport" class="btn btn-secondary mt-3">Download Report</button>
+
+
+    <hr>
+    <h2>Summary Statistics</h2>
+
+    <div id="summaryStatistics">
+        <p>Average Temperature: <span id="avgTemperature">N/A</span></p>
+        <p>Average Humidity: <span id="avgHumidity">N/A</span></p>
+        <p>Average CO2 Level: <span id="avgCO2">N/A</span></p>
+        <p>Average Smoke Level: <span id="avgSmoke">N/A</span></p>
+        <p>Average Pressure: <span id="avgPressure">N/A</span></p>
+        <p>Average Dust Level: <span id="avgDust">N/A</span></p>
+        <p>Water Leak Detected: <span id="waterLeak">N/A</span></p>
+        <p>Average Leak Status: <span id="avgLeak">N/A</span></p>
+    </div>
+
+    <hr>
+    <h2>Visualizations</h2>
+    <div class="chart-container">
+        <div class="chart-item">
+            <h3 style="text-align: center;">Temperature and Humidity Bar Chart</h3>
+            <canvas id="barChartContainer"></canvas>
+        </div>
+        <div class="chart-item">
+            <h3 style="text-align: center;">Line Chart</h3>
+            <canvas id="lineChartContainer"></canvas>
+        </div>
+        <div class="chart-item">
+            <h3 style="text-align: center;">Data Distribution Pie Chart</h3>
+            <canvas id="pieChartContainer"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<script src="sensor-dashboard.js"></script>
+</body>
+</html>
